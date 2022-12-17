@@ -1,5 +1,4 @@
 from pygame import *
-from random import randint
 
 #parent class for other sprites
 class GameSprite(sprite.Sprite):
