@@ -2,15 +2,15 @@ from pygame import *
 
 #parent class for other sprites
 class GameSprite(sprite.Sprite):
-    def __init__(self, player_image, player_x, player_y, size_x, sixe_y, player speed):
+    def __init__(self, player_image, player_x, player_y, size_x, size_y, player_speed):
         super(). __init__()
 
         self.image = transform.scale(image.load(player_image), (size_x, size_y))
         self.speed = player_speed
 
-        self.rect = self.image.ger_rect()
+        self.rect = self.image.get_rect()
         self.rect.x = player_x
-        self.rext.y = player_y
+        self.rect.y = player_y
 
     def reset(self):
         window.blit(self.image, (self.rect.x, self.rect.y))
@@ -25,9 +25,9 @@ class Paddle (GameSprite):
             self.rect.y += self.speed
     def update_left(self):
         keys = key.get_pressed()
-        if keys[K_UP] and self.rect.y > 5:
+        if keys[K_w] and self.rect.y > 5:
             self.rect.y -= self.speed
-        if keys[K_DOWN] and self.rect.y < win_width - 80:
+        if keys[K_s] and self.rect.y < win_width - 80:
             self.rect.y += self.speed
 
 #interface
@@ -40,7 +40,7 @@ window.fill(BLUE)
 #sprites
 red_img = "red.png"
 blue_img = "paddle_blue.png"
-ball_img = "ball"
+ball_img = "ball.png"
 
 paddleLeft = Paddle (blue_img, 20, 200, 30, 150, 150)
 paddleRight = Paddle (red_img, 650, 200, 30, 150, 150)
@@ -48,6 +48,9 @@ ball = GameSprite(ball_img, 330, 200, 50, 50, 50)
 
 game = True
 finish = False
+
+clock = time.Clock()
+FPS = 60
 
 #fonts
 font.init()
@@ -69,7 +72,7 @@ while game:
         paddleRight.update_right()
 
         ball.rect.x += speed_x
-        ball.rect.x += speed_y
+        ball.rect.y += speed_y
 
         paddleLeft.reset()
         paddleRight.reset()
